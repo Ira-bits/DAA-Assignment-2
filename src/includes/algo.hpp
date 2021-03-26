@@ -1,6 +1,5 @@
 #pragma once
-#include <bits/stdc++.h>
-
+    
 using std::pair;
 using std::vector;
 
@@ -11,7 +10,7 @@ using std::vector;
  * \param vector<pair<int,int>>& set of (x,y) co-ordinates of the points.
  * \return double the Sum of Squared Errors.
 */
-double getSSE(int, int, vector<pair<int, int>> &);
+double getSSE(int, int, vector<pair<double, double>> &);
 
 /**
  * \brief Calculates Optimal Penalty for each point, considering it to be the last in segment.
@@ -19,4 +18,4 @@ double getSSE(int, int, vector<pair<int, int>> &);
  * \param double the cost of adding lines.
  * \return vector<int> a vector of segment start index with minimum penalty for each.
 */
-vector<int> calculatePenalty(vector<pair<int, int>> &, double);
+vector<int> calculatePenalty(vector<pair<double, double>> &, double);

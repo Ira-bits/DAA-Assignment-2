@@ -1,5 +1,6 @@
-// Driver program for the Segmented Least squares Algorithm
-#include "includes/algo.hpp"
+#include <iostream>
+#include <vector>
+#include "algo.hpp"
 
 using std::cin;
 using std::cout;
@@ -9,7 +10,8 @@ int main() {
     double c;
     int n;
     cin >> c >> n;
-    vector<pair<int, int>> coords(n);
+
+    vector<pair<double, double>> coords(n);
     for (int i = 0; i < n; i++) {
         cin >> coords[i].first >> coords[i].second;
     }

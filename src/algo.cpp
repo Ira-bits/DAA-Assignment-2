@@ -1,12 +1,17 @@
-#include "includes/algo.hpp"
-#include "includes/config.hpp"
+#include <limits>
+#include <algorithm>
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include "algo.hpp"
+#include "config.hpp"
 
 using std::min;
 using std::pow;
 
-double getSSE(int i, int j, vector<pair<int, int>> &coords) {
+double getSSE(int i, int j, vector<pair<double, double>> &coords) {
     int n = j - i + 1;                    // The number of points in the segment
-    int xi, yi, sumX, sumY, sumXY, sumX2; // sumK represents Summation(ki)
+    double xi, yi, sumX, sumY, sumXY, sumX2; // sumK represents Summation(ki)
     double a, b, sse;                     // The parameters of the Best Fit Line
     sse = sumX = sumY = sumXY = sumX2 = 0;
 
@@ -37,10 +42,23 @@ double getSSE(int i, int j, vector<pair<int, int>> &coords) {
     return sse;
 }
 
-vector<int> calculatePenalty(vector<pair<int, int>> &coords, double c) {
+vector<int> calculatePenalty(vector<pair<double, double>> &coords, double c) {
+    sort(coords.begin(), coords.end());
     int n = coords.size();    // Total number of Points
-    double sse[LIMIT][LIMIT]; // SSE for every combination of Segments of Points
+     // SSE for every combination of Segments of Points
+
+    /*double** sse = new double*[LIMIT];
+    for (int i = 0; i < LIMIT; i++)
+    {
+        sse[i] = new double[LIMIT];
+    }
     memset(sse, 0, sizeof(sse));
+    */
+
+    auto sse = new double[LIMIT][LIMIT];
+    for (int i=0;i < LIMIT;i++)
+        for (int j = 0;j < LIMIT;j++)
+            sse[i][j] = 0;
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < i - 1; j++) {
@@ -48,8 +66,8 @@ vector<int> calculatePenalty(vector<pair<int, int>> &coords, double c) {
         }
     }
 
-    vector<pair<double, int>> penalty(n, {DBL_MAX, 0}); // optimal penalty for each index considering it as last in the segment
-    penalty[0].first = 0;                               // Since 0 will be considered the first as well as last in the segment
+    vector<pair<double, int>> penalty(n, {LIMIT, 0}); // optimal penalty for each index considering it as last in the segment
+    penalty[0].first = 0;  // Since 0 will be considered the first as well as last in the segment
     double temp;
 
     /**
