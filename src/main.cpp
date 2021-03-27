@@ -4,12 +4,15 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::sort;
 
 int main() {
     double c;
     int n;
     cin >> c >> n;
-    vector<pair<int, int>> coords(n);
+    vector<pair<double, double>> coords(n);
+
+    // Algorithm expects the co-ordinates to be pre-sorted by their x-ordinate.
     for (int i = 0; i < n; i++) {
         cin >> coords[i].first >> coords[i].second;
     }
