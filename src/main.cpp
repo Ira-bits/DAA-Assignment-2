@@ -12,7 +12,7 @@ int main() {
     cin >> c >> n;
     vector<pair<double, double>> coords(n);
 
-    // Algorithm expects the co-ordinates to be pre-sorted by their x-ordinate.
+    // Algorithm expects the co-ordinates to be pre-sorted by their x-coordinate.
     for (int i = 0; i < n; i++) {
         cin >> coords[i].first >> coords[i].second;
     }
