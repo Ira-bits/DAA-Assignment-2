@@ -1,0 +1,87 @@
+#!/usr/bin/python3
+
+# How to use this testing script?
+# This script will complile the code ( using make all ) and run several testcases.
+# Testcases should be stored in ./tests directory
+# Each testcase should be numbered, starting from 0 in the form of two files, .in and .out
+# For example, first testcase will be in "1.in" and "1.out"
+# in file should contain the input to be given to the program.
+# out file should contain the expected output
+
+import os
+import sys
+import subprocess
+from pathlib import Path
+
+
+def del_line():
+    sys.stdout.write("\033[F")  # back to previous line
+    sys.stdout.write("\033[K")  # clear line
+
+
+SKIP_COMPILE = False
+TESTCASE_DIR = "./tests"
+ALGO_LOC = "./build/algo"
+CRED = '\033[91m'
+CEND = '\033[0m'
+CGREEN = '\33[32m'
+CBLUE = '\33[34m'
+
+os.system("clear")
+
+print("Starting tests")
+
+if not SKIP_COMPILE:
+    print(CBLUE + "Compiling" + CEND)
+    compilation_result = os.system("make all")
+    if compilation_result != 0:
+        print(CRED + "Compilation failed" + CEND)
+        exit()
+
+
+os.system("clear")
+
+test_num = 0
+pass_num = 0
+fail_num = 0
+
+while True:
+    test_num += 1
+    curr_in_path = os.path.join(TESTCASE_DIR, str(test_num) + ".in")
+    curr_out_path = os.path.join(
+        TESTCASE_DIR, str(test_num) + ".out")
+    if not os.path.exists(curr_in_path):
+        test_num -= 1
+        break
+    print("Running test {}".format(test_num))
+    exec_cmd = ALGO_LOC + " < " + curr_in_path + " > temp.out 2>/dev/null"
+    diff_cmd = "diff -bBw temp.out " + curr_out_path + " > /dev/null 2>/dev/null"
+    os.system(exec_cmd)
+    diff_return_code = os.system(diff_cmd)
+
+    # f = open("./tests/tcase" + str(test_num) + ".out", "a")
+    # f.seek(0)
+    # f.truncate()
+    # f.write(Path("temp.out").read_text().strip())
+    # f.close()
+
+    if diff_return_code != 0:
+        del_line()
+        print((CRED + "Test case {} failed." + CEND).format(test_num), end="")
+        expected = Path(curr_out_path).read_text().strip()
+        got = Path("temp.out").read_text().strip()
+        print(" Expected \"{}\" Got \"{}\".".format(expected, got))
+        fail_num += 1
+    elif diff_return_code == 2:
+        del_line()
+        print((CRED + "Fatal error with diff for test {}, diff command was '{}'\n" + CEND).format(
+            test_num, diff_cmd))
+        fail_num += 1
+    else:
+        del_line()
+        print((CGREEN + "Test case {} passed." + CEND).format(test_num))
+        pass_num += 1
+
+os.system("rm -f temp.out")
+print((CBLUE + "Finished evaluating {} test(s).\n{} passed and {} failed." + CEND).format(
+    test_num, pass_num, fail_num))
