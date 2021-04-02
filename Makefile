@@ -3,6 +3,7 @@ OUT_DIR = build
 CFLAGS = -c -Wall -Werror -Wpedantic -Wunreachable-code -Wextra -g -std=c++17 -O2
 TFLAGS = -D TEST
 INC = -I includes
+.PHONY: test clean
 
 all : algo
 
@@ -19,7 +20,7 @@ algo.o : src/algo.cpp
 			$(CC) $(CFLAGS) src/algo.cpp $(OUTPUT) $(INC)
 
 test:
-			./scripts/test
+			./test-script
 
 clean : 
 			rm -rf $(OUT_DIR)
