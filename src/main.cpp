@@ -1,10 +1,11 @@
 // Driver program for the Segmented Least squares Algorithm
 #include "includes/algo.hpp"
-
+#include <stack>
 using std::cin;
 using std::cout;
 using std::endl;
 using std::sort;
+using std::stack;
 
 int main() {
     double c;
@@ -18,10 +19,18 @@ int main() {
     }
     vector<int> ans = calculatePenalty(coords, c);
 
-    // Segment Ranges in the format (max_index,min_index)
+    stack<pair<int, int>> prettyAns;
+
     for (int i = ans.size() - 1; i > 0;) {
-        cout << i << " " << ans[i] << endl;
+        prettyAns.push({ans[i] + 1, i + 1});
         i = ans[i];
     }
+
+    while (!prettyAns.empty()) {
+        auto curr = prettyAns.top();
+        prettyAns.pop();
+        cout << curr.first << " " << curr.second << endl;
+    }
+
     return 0;
 }
