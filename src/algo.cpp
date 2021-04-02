@@ -41,25 +41,28 @@ vector<int> calculatePenalty(vector<pair<double, double>> &coords, double c) {
     double sse;            // SSE for a combination of Segments of Points
 
     vector<pair<double, int>> penalty(n, {DBL_MAX, 0}); // optimal penalty for each index considering it as last in the segment
-    penalty[0].first = 0;                               // Since 0 will be considered the first as well as last in the segment
+    penalty[0].first = c;                               // Since 0 will be considered the first as well as last in the segment
     double temp;
 
     /**
      * Using Bottom Up Dynamic Programming approach to calculate penalty.first (the dp array)
      * penalty.second conatains the segemnet start for the segment which gives optimum penalty for that index.
-     * DP Relation => dp[i] = min(sse[j][i] + c + dp[j-1]) where 0<=j<i
+     * DP Relation => dp[j] = min(sse[i][j] + c + dp[i-1]) where 0<=i<j
      * c is the penalty awarded to take into account the optimal number of best fit lines
     */
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            sse = getSSE(j, i, coords); // sse for segment from  j to i
-            if (j) {
-                temp = sse + c + penalty[j - 1].first;
+    for (int j = 1; j < n; j++) {
+        for (int i = 0; i < j; i++) {
+            sse = getSSE(i, j, coords); // sse for segment from  j to i
+            if (i) {
+                temp = sse + c + penalty[i - 1].first;
             } else {
                 temp = sse + c;
             }
-            penalty[i].second = temp < penalty[i].first ? j : penalty[i].second;
-            penalty[i].first = temp < penalty[i].first ? temp : penalty[i].first;
+
+            if (temp < penalty[j].first) {
+                penalty[j].second = i;
+                penalty[j].first = temp;
+            }
         }
     }
 
