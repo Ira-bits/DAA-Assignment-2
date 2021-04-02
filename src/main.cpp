@@ -19,7 +19,6 @@ int main() {
     vector<int> ans = calculatePenalty(coords, c);
 
     // Segment Ranges in the format (max_index,min_index)
-    cout << "Segment Ranges->" << endl;
     for (int i = ans.size() - 1; i > 0;) {
         cout << i << " " << ans[i] << endl;
         i = ans[i];
