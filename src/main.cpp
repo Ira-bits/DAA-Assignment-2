@@ -1,7 +1,11 @@
 // Driver program for the Segmented Least squares Algorithm
+#include "ctime"
 #include "includes/algo.hpp"
+#include "sys/sysinfo.h"
+#include "sys/types.h"
 
 using std::cin;
+using std::clock;
 using std::cout;
 using std::endl;
 using std::setprecision;
@@ -28,6 +32,8 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> coords[i].first >> coords[i].second;
     }
+
+    const clock_t begin_time = clock();
     vector<pair<double, int>> ans = calculatePenalty(coords, c);
 
     stack<pair<int, int>> prettyAns;
@@ -49,6 +55,6 @@ int main() {
 
     // Total Penalty and Total SSE for the optimal Solution
     cout << setprecision(10) << totalPenalty << " " << totalSSE << endl;
-
+    std::cout << setprecision(4) << "Time taken: " << float(clock() - begin_time) / CLOCKS_PER_SEC << " seconds\n";
     return 0;
 }
