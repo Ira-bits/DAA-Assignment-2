@@ -10,7 +10,7 @@ the algorithm is `O( n^2 * n )`, which is, `O(n^3)`
 
 ### Running time w.r.t number of points
 
-The algorithms takes `O(n^3)` time to run, where n is the number of points. This is illustrated by the plot shown below.
+The algorithm takes `O(n^3)` time to run, where n is the number of points. This is illustrated by the plot shown below.
 
 ![time-analysis](../time.png)
 
@@ -34,7 +34,6 @@ The algorithms takes `O(n^3)` time to run, where n is the number of points. This
 | 850        | 1.029         |
 | 900        | 1.21          |
 
-
 ### Running time w.r.t penalty per segment
 
 The running time of the algorithm is independent of the value of penalty per segment ( called `c`), as illustrated by the plot below:
@@ -43,8 +42,7 @@ The running time of the algorithm is independent of the value of penalty per seg
 
 ## Penalty vs Segments analysis:
 
-The final cost for a given combination of given points does'nt depend on the value of c , i.e. , penalty per segment. Rather, it depends on  the spread of the points
-in the cartesian plane. This is evident from the plot shown below.
+The number of segments inversely depends on the penalty constant `c` that is chosen. As `c` becomes large, we get a single line, and for very small `c` we get a segment for every point.
 
 ![penalty-analysis](../penalty.png)
 
@@ -63,10 +61,8 @@ in the cartesian plane. This is evident from the plot shown below.
 
 ## Memory usage analysis:
 
-We have optimized the algorithm to use lesser memory.  
-Formally, the algorithm requires that you store all the errors for every iteration
-but we don't do that
-
+We have optimized the algorithm to use less memory.  
+Formally, the algorithm stores the errors for every iteration but that is actually not necessary.  
 As evident from the plot below, the memory required by the algorithm is linear w.r.t. the number of points.
 
 ![memory-analysis](../memory.png)
@@ -84,11 +80,9 @@ As evident from the plot below, the memory required by the algorithm is linear w
 | 401        | 141611                  |
 | 451        | 148911                  |
 
-
 # Visiualization
 
 Below we show the visualization of the algorithm for various test-cases.
-
 
 ![test-case](../v/1.png)<hr/>
 ![test-case](../v/2.png)<hr/>
