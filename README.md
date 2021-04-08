@@ -1,5 +1,6 @@
-# DAA-Assignment-2
-Assignment 2 for CS F364 Design And Analysis of Algorithms
+/\_! \mainpage CS F364 Design And Analysis of Algorithms Assignment 2
+
+# Assignment 2 for CS F364 Design And Analysis of Algorithms
 
 ## Guides
 
