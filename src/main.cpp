@@ -4,8 +4,19 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::setprecision;
 using std::sort;
 using std::stack;
+
+void dbg_out() {
+    cout << endl;
+}
+template <typename Head, typename... Tail>
+void dbg_out(Head H, Tail... T) {
+    cout << ' ' << H;
+    dbg_out(T...);
+}
+#define dbg(...) cout << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__), cout << endl
 
 int main() {
     double c;
@@ -20,12 +31,11 @@ int main() {
     vector<pair<double, int>> ans = calculatePenalty(coords, c);
 
     stack<pair<int, int>> prettyAns;
-    double totalPenalty = 0;
+    double totalPenalty = ans[ans.size() - 1].first;
     double totalSSE = 0;
 
     for (int i = ans.size() - 1; i > 0;) {
         prettyAns.push({ans[i].second + 1, i + 1});
-        totalPenalty += ans[i].first;
         totalSSE += getSSE(ans[i].second, i, coords);
         i = ans[i].second - 1;
     }
@@ -38,7 +48,7 @@ int main() {
     }
 
     // Total Penalty and Total SSE for the optimal Solution
-    cout << totalPenalty << " " << totalSSE << endl;
+    cout << setprecision(10) << totalPenalty << " " << totalSSE << endl;
 
     return 0;
 }
