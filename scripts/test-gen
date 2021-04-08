@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+
+# This file randomly generates very large testcases
+# Type the penalty and then the number of points to generates in 2 separate lines
+# To run, type: ./scripts/test-gen > ./tests/<num>.in
+
+# Testcases should be stored in ./tests directory
+# Each testcase should be numbered, starting from 0 in the form of two files, .in and .out
+# For example, first testcase will be in "1.in" and "1.out"
+# in file should contain the input to be given to the program.
+# out file should contain the expected output
+
+from random import random
+
+
+def main():
+    c = int(input())
+    n = int(input())
+    print(f"{c} {n}")
+
+    for x in range(0, n):
+        print(f"{x} {100.*random()-50}")
+
+
+if __name__ == '__main__':
+    main()
