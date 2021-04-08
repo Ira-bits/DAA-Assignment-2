@@ -55,7 +55,8 @@ while True:
         break
     print("Running test {}".format(test_num))
     exec_cmd = ALGO_LOC + " < " + curr_in_path + " > temp.out 2>/dev/null"
-    diff_cmd = "diff -bBw temp.out " + curr_out_path + " > /dev/null 2>/dev/null"
+    diff_cmd = "diff -bBw -I'^Time*' temp.out " + \
+        curr_out_path + " > /dev/null 2>/dev/null"
     os.system(exec_cmd)
     diff_return_code = os.system(diff_cmd)
 
