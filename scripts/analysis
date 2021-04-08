@@ -1,0 +1,103 @@
+#!/usr/bin/python3
+
+import os
+import subprocess
+import matplotlib.pyplot as plt
+import numpy as np
+
+TESTCASE_DIR = "./tests"
+ALGO_LOC = "./build/algo"
+TEST_GEN = "./scripts/test-gen"
+
+
+def get_time_perf():
+    x = []
+    y = []
+    for i in range(100, 1000, 50):
+        bstring = subprocess.check_output(
+            ["./scripts/test-gen"], input=f"10\n{i}".encode())
+
+        output = subprocess.check_output(
+            [ALGO_LOC], input=bstring).decode('utf-8')
+        time_taken = float(output.split("\n")[-2].split()[2])
+
+        print(i, time_taken)
+        x.append(i)
+        y.append(time_taken)
+
+    plt.clf()
+    real, = plt.plot(x, y)
+
+    x = np.array(x)
+    y2 = np.power(x, 3)/500000000
+    sim, = plt.plot(x, y2, color='k')
+
+    plt.xlabel("Number of points")
+    plt.ylabel("Time taken(s)")
+    plt.legend(handles=[real, sim], labels=['time taken', 'y = 2e-9 x^3'])
+    plt.savefig("./time.png")
+    return x, y
+
+
+def get_c_analysis():
+    x = []
+    y = []
+    lines = ""
+    with open("./tests/14.in") as f:
+        lines = f.readlines()
+
+    for c in range(0, 1000, 100):
+        n = lines[0].split()[1]
+        lines[0] = f"{c} {n}\n"
+        bstring = "".join(lines).encode()
+
+        output = subprocess.check_output(
+            [ALGO_LOC], input=bstring).decode('utf-8')
+
+        num_segments = int(output.split("\n")[0])
+
+        print(c, num_segments)
+        x.append(c)
+        y.append(num_segments)
+
+    plt.clf()
+    plt.plot(x, y)
+    plt.xlabel("Penalty (c)")
+    plt.ylabel("Number of segments")
+    plt.savefig("./penalty.png")
+    return x, y
+
+
+def get_m_analysis():
+    x = []
+    y = []
+    for i in range(1, 501, 50):
+        bstring = subprocess.check_output(
+            ["./scripts/test-gen"], input=f"10\n{i}".encode())
+
+        inp = ALGO_LOC
+        proc = subprocess.Popen(
+            ["valgrind", inp], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        _, ret = proc.communicate(bstring)
+        index = ret.decode().find("frees,")
+
+        index += 6
+
+        mem = int(ret.decode()[index:].split()[0].replace(',', ''))
+
+        print(i, mem)
+        x.append(i)
+        y.append(mem)
+
+    plt.clf()
+    plt.plot(x, y)
+    plt.xlabel("Number of points")
+    plt.ylabel("Memory allocated to heap (bytes)")
+    plt.savefig("./memory.png")
+    return x, y
+
+
+get_m_analysis()
+get_time_perf()
+get_c_analysis()
