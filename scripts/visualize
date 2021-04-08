@@ -10,7 +10,7 @@ n = int(inp[1])
 pts = []
 for i in range(0, n):
     inp = inputFile.readline().split()
-    pts.append((int(inp[0]), int(inp[1])))
+    pts.append((float(inp[0]), float(inp[1])))
 
 outputfile = open(f"./tests/{tcnum}.out", "r")
 count = int(outputfile.readline())
@@ -26,5 +26,5 @@ for i in range(0, count):
     plt.plot(x, m * x + b)
 
 penalty, sse = outputfile.readline().split()
-plt.title("Total Penalty is " + penalty + "\nTotal SSE is " + sse)
+plt.title("Total Penalty = " + penalty + "\nTotal SSE = " + sse)
 plt.show()
