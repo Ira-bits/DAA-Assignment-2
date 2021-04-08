@@ -1,6 +1,6 @@
 // Driver program for the Segmented Least squares Algorithm
 #include "includes/algo.hpp"
-#include <stack>
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -17,13 +17,17 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> coords[i].first >> coords[i].second;
     }
-    vector<int> ans = calculatePenalty(coords, c);
+    vector<pair<double, int>> ans = calculatePenalty(coords, c);
 
     stack<pair<int, int>> prettyAns;
+    double totalPenalty = 0;
+    double totalSSE = 0;
 
     for (int i = ans.size() - 1; i > 0;) {
-        prettyAns.push({ans[i] + 1, i + 1});
-        i = ans[i];
+        prettyAns.push({ans[i].second + 1, i + 1});
+        totalPenalty += ans[i].first;
+        totalSSE += getSSE(ans[i].second, i, coords);
+        i = ans[i].second - 1;
     }
 
     while (!prettyAns.empty()) {
@@ -31,6 +35,9 @@ int main() {
         prettyAns.pop();
         cout << curr.first << " " << curr.second << endl;
     }
+
+    cout << "Total Penalty = " << totalPenalty << endl;
+    cout << "Total SSE = " << totalSSE << endl;
 
     return 0;
 }
