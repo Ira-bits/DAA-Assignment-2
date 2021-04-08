@@ -1,3 +1,8 @@
+# Project Specific
+build 
+html/
+
+
 # Prerequisites
 *.d
 
@@ -30,6 +35,3 @@
 *.exe
 *.out
 *.app
-
-# Project Specific
-build 
