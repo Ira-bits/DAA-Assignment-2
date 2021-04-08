@@ -20,7 +20,7 @@ algo.o : src/algo.cpp
 			$(CC) $(CFLAGS) src/algo.cpp $(OUTPUT) $(INC)
 
 test:
-			./test-script
+			@./scripts/test-script
 
 clean : 
 			rm -rf $(OUT_DIR)

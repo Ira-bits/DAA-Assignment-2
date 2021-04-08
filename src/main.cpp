@@ -33,6 +33,9 @@ int main() {
         cin >> coords[i].first >> coords[i].second;
     }
 
+    // Redundant sorting, just in case.
+    sort(coords.begin(), coords.end());
+
     const clock_t begin_time = clock();
     vector<pair<double, int>> ans = calculatePenalty(coords, c);
 

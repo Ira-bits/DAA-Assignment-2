@@ -1,8 +1,16 @@
 # Analysis
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at enim malesuada, molestie purus ac, dapibus lorem. Donec nulla metus, posuere eget odio a, suscipit vehicula arcu. Cras felis libero, rhoncus eget vulputate quis, molestie feugiat leo. Quisque sed massa ullamcorper, scelerisque magna nec, iaculis libero. Nulla eu turpis ut quam accumsan iaculis ac quis nisi. Curabitur vehicula libero vel molestie pulvinar.
+In this document, we present various types of analysis for the line fitting dynamic programming algorithm.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum neque felis, venenatis ornare ipsum in, porta fringilla ligula. Integer sed erat non libero lacinia pretium. Cras luctus augue ut porttitor vestibulum.
+## Running time analysis
+
+Below we consider various cases of running time analysis. The algorithm implemented is a case of a 2-D dynamic programming problem.
+Hence for every combination of points in the segment, the sum of square of errors is calculated in `O(n)`. Hence, the overall complexity of
+the algorithm is `O( n^2 * n )`, which is, `O(n^3)`
+
+### Running time w.r.t number of points
+
+The algorithms takes `O(n^3)` time to run, where n is the number of points. This is illustrated by the plot shown below.
 
 ![time-analysis](../time.png)
 
@@ -26,9 +34,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum neque felis,
 | 850        | 1.029         |
 | 900        | 1.21          |
 
+
+### Running time w.r.t penalty per segment
+
+The running time of the algorithm is independent of the value of penalty per segment ( called `c`), as illustrated by the plot below:
+
+![penalty-analysis](../time-wrt-c.png)
+
 ## Penalty vs Segments analysis:
 
-Quisque sed massa ullamcorper, scelerisque magna nec, iaculis libero. Nulla eu turpis ut quam accumsan iaculis ac quis nisi. Curabitur vehicula libero vel molestie pulvinar.
+The final cost for a given combination of given points does'nt depend on the value of c , i.e. , penalty per segment. Rather, it depends on  the spread of the points
+in the cartesian plane. This is evident from the plot shown below.
 
 ![penalty-analysis](../penalty.png)
 
@@ -51,7 +67,7 @@ We have optimized the algorithm to use lesser memory.
 Formally, the algorithm requires that you store all the errors for every iteration
 but we don't do that
 
-Quisque sed massa ullamcorper, scelerisque magna nec, iaculis libero. Nulla eu turpis ut quam accumsan iaculis ac quis nisi. Curabitur vehicula libero vel molestie pulvinar.
+As evident from the plot below, the memory required by the algorithm is linear w.r.t. the number of points.
 
 ![memory-analysis](../memory.png)
 
@@ -67,3 +83,24 @@ Quisque sed massa ullamcorper, scelerisque magna nec, iaculis libero. Nulla eu t
 | 351        | 133799                  |
 | 401        | 141611                  |
 | 451        | 148911                  |
+
+
+# Visiualization
+
+Below we show the visualization of the algorithm for various test-cases.
+
+
+![test-case](../v/1.png)<hr/>
+![test-case](../v/2.png)<hr/>
+![test-case](../v/3.png)<hr/>
+![test-case](../v/14.png)<hr/>
+![test-case](../v/4.png)<hr/>
+![test-case](../v/5.png)<hr/>
+![test-case](../v/6.png)<hr/>
+![test-case](../v/7.png)<hr/>
+![test-case](../v/8.png)<hr/>
+![test-case](../v/9.png)<hr/>
+![test-case](../v/10.png)<hr/>
+![test-case](../v/11.png)<hr/>
+![test-case](../v/12.png)<hr/>
+![test-case](../v/13.png)<hr/>
