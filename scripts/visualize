@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+import matplotlib.pyplot as plt
+import numpy as np
+
+tcnum = int(input())
+
+inputFile = open(f"tests/{tcnum}.in", "r")
+inp = inputFile.readline().split()
+n = int(inp[1])
+pts = []
+for i in range(0, n):
+    inp = inputFile.readline().split()
+    pts.append((int(inp[0]), int(inp[1])))
+
+outputfile = open(f"./tests/{tcnum}.out", "r")
+count = int(outputfile.readline())
+
+for i in range(0, count):
+    inp = outputfile.readline().split()
+    start = int(inp[0])
+    end = int(inp[1])
+    x = np.array([pt[0] for pt in pts[start - 1 : end]])
+    y = np.array([pt[1] for pt in pts[start - 1 : end]])
+    m, b = np.polyfit(x, y, 1)
+    plt.plot(x, y, "o")
+    plt.plot(x, m * x + b)
+
+penalty, sse = outputfile.readline().split()
+plt.title("Total Penalty is " + penalty + "\nTotal SSE is " + sse)
+plt.show()

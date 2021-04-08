@@ -30,14 +30,15 @@ int main() {
         i = ans[i].second - 1;
     }
 
+    cout << prettyAns.size() << endl; // Total Number of Segments
     while (!prettyAns.empty()) {
         auto curr = prettyAns.top();
         prettyAns.pop();
         cout << curr.first << " " << curr.second << endl;
     }
 
-    cout << "Total Penalty = " << totalPenalty << endl;
-    cout << "Total SSE = " << totalSSE << endl;
+    // Total Penalty and Total SSE for the optimal Solution
+    cout << totalPenalty << " " << totalSSE << endl;
 
     return 0;
 }
