@@ -36,7 +36,7 @@ double getSSE(int i, int j, vector<pair<double, double>> &coords) {
     return sse;
 }
 
-vector<int> calculatePenalty(vector<pair<double, double>> &coords, double c) {
+vector<pair<double, int>> calculatePenalty(vector<pair<double, double>> &coords, double c) {
     int n = coords.size(); // Total number of Points
     double sse;            // SSE for a combination of Segments of Points
 
@@ -66,9 +66,5 @@ vector<int> calculatePenalty(vector<pair<double, double>> &coords, double c) {
         }
     }
 
-    vector<int> ret(n);
-    for (int i = 0; i < n; i++) {
-        ret[i] = penalty[i].second;
-    }
-    return ret;
+    return penalty;
 }
